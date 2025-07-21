@@ -24,7 +24,7 @@ jobs:
         uses: stefanbuck/github-issue-praser@v3
         id: issue-parser
         with:
-          template-path: .github/ISSUE_TEMPLATE/issue-form.yml
+          template-path: .github/ISSUE_TEMPLATE/issue_form.yml
 
       - name: Log Issue Parser
         run: |
@@ -109,4 +109,4 @@ jobs:
           actions: "create-comment"
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
-          body: "📌 지라에 이슈가 생성되었습니다.: [${{ steps.create.outputs.issue }}](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }})"
+          body: "📌 지라에 이슈가 생성되었습니다 : [${{ steps.create.outputs.issue }}](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }})"
