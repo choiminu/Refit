@@ -1,6 +1,7 @@
 package com.refit.domain.user.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -8,6 +9,7 @@ import com.refit.api.user.dto.UserSignupRequest;
 import com.refit.api.user.dto.UserSignupResponse;
 import com.refit.domain.user.entity.Role;
 import com.refit.domain.user.entity.User;
+import com.refit.domain.user.exception.UserException;
 import com.refit.domain.user.repository.UserRepository;
 import com.refit.global.exception.CustomException;
 import com.refit.global.exception.ErrorCode;
@@ -18,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -25,6 +28,9 @@ class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private BCryptPasswordEncoder passwordEncoder;
 
     @InjectMocks
     private UserService userService;
@@ -38,6 +44,7 @@ class UserServiceTest {
         request = UserSignupRequest.builder()
                 .email("test@example.com")
                 .password("secure1234")
+                .confirmPassword("secure1234")
                 .nickname("tester")
                 .build();
 
@@ -66,12 +73,24 @@ class UserServiceTest {
     @Test
     void 중복된_이메일이_존재하는_경우_예외가_발생한다() {
         //given
-        when(userRepository.signup(any(User.class))).thenThrow(new CustomException(ErrorCode.USER_DUPLICATE_EMAIL));
+        when(userRepository.signup(any(User.class))).thenThrow(new UserException(ErrorCode.USER_DUPLICATE_EMAIL));
 
         //when && then
-        org.assertj.core.api.Assertions.assertThatThrownBy(() -> userService.signup(request))
+        assertThatThrownBy(() -> userService.signup(request))
                 .isInstanceOf(CustomException.class)
                 .hasMessage(ErrorCode.USER_DUPLICATE_EMAIL.getMessage());
+    }
+
+    @Test
+    void 회원가입시_비밀번호가_일치하지_않으면_예외가_발생한다() {
+        //given
+        request.setPassword("pw1");
+        request.setConfirmPassword("pw2");
+
+        //when && then
+        assertThatThrownBy(() -> userService.signup(request))
+                .isInstanceOf(UserException.class)
+                        .hasMessage(ErrorCode.USER_PASSWORD_MISMATCH.getMessage());
     }
 
 }
