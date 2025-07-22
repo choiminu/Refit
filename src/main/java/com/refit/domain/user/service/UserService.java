@@ -4,6 +4,7 @@ import com.refit.api.user.dto.UserSignupRequest;
 import com.refit.api.user.dto.UserSignupResponse;
 import com.refit.domain.user.entity.User;
 import com.refit.domain.user.repository.UserRepository;
+import com.refit.domain.user.service.signup.UserSignupService;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

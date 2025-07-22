@@ -6,12 +6,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.refit.api.user.dto.UserSignupRequest;
-import com.refit.api.user.dto.UserSignupResponse;
 import com.refit.domain.user.entity.Role;
 import com.refit.domain.user.entity.User;
 import com.refit.domain.user.exception.UserException;
 import com.refit.domain.user.repository.UserRepository;
-import com.refit.global.exception.CustomException;
+import com.refit.domain.user.service.signup.LocalSignupService;
 import com.refit.global.exception.ErrorCode;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;

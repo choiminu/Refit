@@ -1,4 +1,4 @@
-package com.refit.domain.user.service;
+package com.refit.domain.user.service.signup;
 
 import com.refit.api.user.dto.UserSignupRequest;
 import com.refit.domain.user.entity.User;
