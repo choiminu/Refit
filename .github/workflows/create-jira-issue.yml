@@ -84,11 +84,11 @@ jobs:
              ISSUE_NUMBER="${{ steps.issue-parser.outputs.issueparser_childKey }}"
            fi
            ISSUE_TITLE="${{ steps.issue-parser.outputs.issueparser_branch}}"
-           BRANCH_NAME="${ISSUE_NUMBER}-$(echo ${ISSUE_TITLE} | sed 's/ /-/g')"
+           BRANCH_NAME="$(echo ${ISSUE_TITLE} | sed 's/ /-/g')"
            git checkout -b "${BRANCH_NAME}"
            git push origin "${BRANCH_NAME}"
 
-      - name: Update issue title
+      - name: 이슈 제목 업데이트
         uses: actions-cool/issues-helper@v3
         with:
           actions: "update-issue"
@@ -101,10 +101,11 @@ jobs:
         with:
           actions: "update-issue"
           token: ${{ secrets.GITHUB_TOKEN}}
-          title: "${{ github.event.issue.title }} - ${{ steps.issue-parser.outputs.issueparser_childKey }}"
+          title: "${{ github.event.issue.title }} - [${{ steps.issue-parser.outputs.issueparser_childKey }}]"
           body: "📌 지라에 이슈 상태가 변경되었습니다 : [${{ steps.create.outputs.issue }}](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }})"
 
       - name: Add comment with Jira issue link
+        if: ${{ steps.issue-parser.outputs.issueparser_childKey == '' && steps.issue-parser.outputs.issueparser_childKey == null }}
         uses: actions-cool/issues-helper@v3
         with:
           actions: "create-comment"
