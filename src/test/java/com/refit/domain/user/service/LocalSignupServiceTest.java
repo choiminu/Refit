@@ -6,7 +6,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.refit.api.user.dto.UserSignupRequest;
-import com.refit.domain.user.entity.Role;
+import com.refit.domain.user.entity.vo.Nickname;
+import com.refit.domain.user.entity.type.Role;
 import com.refit.domain.user.entity.User;
 import com.refit.domain.user.exception.UserException;
 import com.refit.domain.user.repository.UserRepository;
@@ -44,13 +45,12 @@ class LocalSignupServiceTest {
                 .email("test@example.com")
                 .password("secure1234")
                 .confirmPassword("secure1234")
-                .nickname("tester")
                 .build();
 
         user = User.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
-                .nickname(request.getNickname())
+                .nickname(new Nickname("test"))
                 .role(Role.USER)
                 .createdDate(LocalDateTime.now())
                 .build();
@@ -61,7 +61,6 @@ class LocalSignupServiceTest {
         User response = localSignupService.signup(request);
 
         assertThat(response.getEmail()).isEqualTo(request.getEmail());
-        assertThat(response.getNickname()).isEqualTo(request.getNickname());
     }
 
     @Test

@@ -1,5 +1,8 @@
 package com.refit.domain.user.entity;
 
+import com.refit.domain.user.entity.type.Role;
+import com.refit.domain.user.entity.vo.Nickname;
+import com.refit.domain.user.entity.vo.Point;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -32,7 +35,8 @@ public class User {
 
     private String password;
 
-    private String nickname;
+    @Embedded
+    private Nickname nickname;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -41,5 +45,9 @@ public class User {
     private Point point;
 
     private LocalDateTime createdDate;
+
+    public String getNickname() {
+        return nickname.getNickname();
+    }
 
 }

@@ -1,8 +1,9 @@
 package com.refit.domain.user.service.signup;
 
 import com.refit.api.user.dto.UserSignupRequest;
-import com.refit.domain.user.entity.Point;
-import com.refit.domain.user.entity.Role;
+import com.refit.domain.user.entity.vo.Nickname;
+import com.refit.domain.user.entity.vo.Point;
+import com.refit.domain.user.entity.type.Role;
 import com.refit.domain.user.entity.User;
 import com.refit.domain.user.exception.UserException;
 import com.refit.domain.user.repository.UserRepository;
@@ -27,12 +28,11 @@ public class LocalSignupService implements UserSignupService{
         return User.builder()
                 .email(request.getEmail())
                 .password(verifyPassword(request.getPassword(), request.getConfirmPassword()))
-                .nickname(request.getNickname())
+                .nickname(new Nickname())
                 .role(Role.USER)
                 .createdDate(LocalDateTime.now())
                 .point(new Point(0))
                 .build();
-
     }
 
     @Override
@@ -41,7 +41,6 @@ public class LocalSignupService implements UserSignupService{
             throw new UserException(ErrorCode.USER_DUPLICATE_EMAIL);
         }
     }
-
 
     private String verifyPassword(String password, String confirmPassword) {
         if (!password.equals(confirmPassword)) {

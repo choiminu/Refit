@@ -1,4 +1,4 @@
-package com.refit.domain.user.entity;
+package com.refit.domain.user.entity.type;
 
 public enum LoginType {
     LOCAL, GOOGLE, KAKAO

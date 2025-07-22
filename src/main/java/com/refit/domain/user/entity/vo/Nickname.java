@@ -1,4 +1,4 @@
-package com.refit.domain.user.entity;
+package com.refit.domain.user.entity.vo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
