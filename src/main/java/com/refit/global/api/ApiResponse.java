@@ -8,9 +8,9 @@ public class ApiResponse<T> {
     public static final String SUCCESS_MESSAGE = "요청에 성공하였습니다.";
     public static final String FAIL_MESSAGE = "요청에 실패하였습니다.";
 
-    private boolean success;
-    private T data;
-    private String message;
+    private final boolean success;
+    private final T data;
+    private final String message;
 
     private ApiResponse(boolean success, String message, T data) {
         this.success = success;
