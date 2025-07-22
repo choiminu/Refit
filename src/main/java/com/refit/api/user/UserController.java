@@ -5,8 +5,7 @@ import com.refit.api.user.dto.UserSignupResponse;
 import com.refit.domain.user.service.UserService;
 import com.refit.global.api.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +19,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<UserSignupResponse>> localJoin(@ModelAttribute UserSignupRequest request) {
-        return new ResponseEntity<>(ApiResponse.success(userService.signup(request, null)),HttpStatus.CREATED);
+    public ApiResponse<UserSignupResponse> localJoin(@ModelAttribute @ParameterObject UserSignupRequest request) {
+        return ApiResponse.success(201, "가입완료", userService.signup(request, null));
     }
 
 }
