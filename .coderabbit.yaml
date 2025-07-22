@@ -2,7 +2,7 @@ reviews:
   enabled: true
   review_status: true
   allow_on_non_default_branches: true
-  language: ko
+  language: ko               
   reviewers:
     - coderabbitai
   rules:
