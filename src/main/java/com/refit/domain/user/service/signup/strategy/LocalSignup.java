@@ -1,4 +1,4 @@
-package com.refit.domain.user.service.signup;
+package com.refit.domain.user.service.signup.strategy;
 
 import com.refit.api.user.dto.UserSignupRequest;
 import com.refit.domain.user.entity.vo.Nickname;
@@ -7,6 +7,7 @@ import com.refit.domain.user.entity.type.Role;
 import com.refit.domain.user.entity.User;
 import com.refit.domain.user.exception.UserException;
 import com.refit.domain.user.repository.UserRepository;
+import com.refit.domain.user.service.signup.UserSignupService;
 import com.refit.global.exception.ErrorCode;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LocalSignupService implements UserSignupService{
+public class LocalSignup implements UserSignupService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;

@@ -13,7 +13,7 @@ public class UserAuthStrategyResolver {
     private final Map<String, UserSignupService> strategyMap;
 
     public UserSignupService resolve(LoginType loginType) {
-        return strategyMap.get(loginType.name().toLowerCase() + "SignupService");
+        return strategyMap.get(loginType.toSignupServiceName());
     }
 
 }

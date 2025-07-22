@@ -11,7 +11,7 @@ import com.refit.domain.user.entity.type.Role;
 import com.refit.domain.user.entity.User;
 import com.refit.domain.user.exception.UserException;
 import com.refit.domain.user.repository.UserRepository;
-import com.refit.domain.user.service.signup.LocalSignupService;
+import com.refit.domain.user.service.signup.strategy.LocalSignup;
 import com.refit.global.exception.ErrorCode;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @ExtendWith(MockitoExtension.class)
-class LocalSignupServiceTest {
+class LocalSignupTest {
 
     @Mock
     private UserRepository userRepository;
@@ -33,7 +33,7 @@ class LocalSignupServiceTest {
     private BCryptPasswordEncoder passwordEncoder;
 
     @InjectMocks
-    private LocalSignupService localSignupService;
+    private LocalSignup localSignup;
 
     private UserSignupRequest request;
     private User user;
@@ -58,7 +58,7 @@ class LocalSignupServiceTest {
 
     @Test
     void 회원가입_성공시_이메일과_닉네임을_반환한다() {
-        User response = localSignupService.signup(request);
+        User response = localSignup.signup(request);
 
         assertThat(response.getEmail()).isEqualTo(request.getEmail());
     }
@@ -68,7 +68,7 @@ class LocalSignupServiceTest {
 
         when(userRepository.existsByEmail(request.getEmail())).thenReturn(true);
 
-        assertThatThrownBy(() -> localSignupService.signup(request))
+        assertThatThrownBy(() -> localSignup.signup(request))
                 .isInstanceOf(UserException.class)
                 .hasMessage(ErrorCode.USER_DUPLICATE_EMAIL.getMessage());
     }
@@ -80,7 +80,7 @@ class LocalSignupServiceTest {
         request.setConfirmPassword("pw2");
 
         //when && then
-        assertThatThrownBy(() -> localSignupService.signup(request))
+        assertThatThrownBy(() -> localSignup.signup(request))
                 .isInstanceOf(UserException.class)
                         .hasMessage(ErrorCode.USER_PASSWORD_MISMATCH.getMessage());
     }
