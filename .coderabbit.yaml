@@ -1,0 +1,22 @@
+reviews:
+  enabled: true
+  review_status: true
+  allow_on_non_default_branches: true
+  language: ko
+  reviewers:
+    - coderabbitai
+  rules:
+    max_lines: 800
+    file_types:
+      - ".java"
+      - ".kt"
+      - ".js"
+      - ".ts"
+      - ".py"
+      - ".go"
+      - ".yml"
+      - ".yaml"
+      - ".json"
+  behavior:
+    summarize_findings: true
+    inline_comments: true
