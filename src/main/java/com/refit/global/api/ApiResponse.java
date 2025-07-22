@@ -32,8 +32,8 @@ public class ApiResponse<T> {
         return new ApiResponse<>(HttpStatus.OK.value(), message, data);
     }
 
-    public static <T> ApiResponse<T> success(int statusCode, String message, T data) {
-        return new ApiResponse<>(statusCode, message, data);
+    public static <T> ApiResponse<T> success(HttpStatus httpStatus, String message, T data) {
+        return new ApiResponse<>(httpStatus.value(), message, data);
     }
 
 
@@ -50,8 +50,8 @@ public class ApiResponse<T> {
         return new ApiResponse<>(HttpStatus.BAD_REQUEST.value(), message, data);
     }
 
-    public static <T> ApiResponse<T> fail(int statusCode, String message, T data) {
-        return new ApiResponse<>(statusCode, message, data);
+    public static <T> ApiResponse<T> fail(HttpStatus httpStatus, String message, T data) {
+        return new ApiResponse<>(httpStatus.value(), message, data);
     }
 
 }

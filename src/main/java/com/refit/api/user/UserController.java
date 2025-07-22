@@ -7,6 +7,7 @@ import com.refit.domain.user.service.UserService;
 import com.refit.global.api.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ public class UserController {
     @PostMapping
     public ApiResponse<UserSignupResponse> signup(@RequestBody UserSignupRequest request) {
         UserSignupResponse response = userService.signup(request, LoginType.LOCAL);
-        return ApiResponse.success(201, "회원가입이 완료되었습니다.", response);
+        return ApiResponse.success(HttpStatus.CREATED, "회원가입이 완료되었습니다.", response);
     }
 
 }
