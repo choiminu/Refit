@@ -102,7 +102,6 @@ jobs:
           actions: "update-issue"
           token: ${{ secrets.GITHUB_TOKEN}}
           title: "${{ github.event.issue.title }} - [${{ steps.issue-parser.outputs.issueparser_childKey }}]"
-          body: "📌 지라에 이슈 상태가 변경되었습니다 : [${{ steps.create.outputs.issue }}](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }})"
 
       - name: Add comment with Jira issue link
         if: ${{ steps.issue-parser.outputs.issueparser_childKey == '' && steps.issue-parser.outputs.issueparser_childKey == null }}
@@ -112,3 +111,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
           body: "📌 지라에 이슈가 생성되었습니다 : [${{ steps.create.outputs.issue }}](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }})"
+
+      - name: Add comment with Jira issue link2
+        if: ${{ steps.issue-parser.outputs.issueparser_childKey != '' && steps.issue-parser.outputs.issueparser_childKey != null }}
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: "create-comment"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: "📌 지라에 이슈 상태가 변경되었습니다 : [${{ steps.create.outputs.issue }}](${{ secrets.JIRA_BASE_URL }}/browse/${{ steps.create.outputs.issue }})"
