@@ -20,8 +20,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<UserSignupResponse>> join(@ModelAttribute UserSignupRequest request) {
-        return new ResponseEntity<>(ApiResponse.success(userService.signup(request)),HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse<UserSignupResponse>> localJoin(@ModelAttribute UserSignupRequest request) {
+        return new ResponseEntity<>(ApiResponse.success(userService.signup(request, null)),HttpStatus.CREATED);
     }
 
 }

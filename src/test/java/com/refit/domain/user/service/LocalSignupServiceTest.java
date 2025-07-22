@@ -24,7 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class LocalSignupServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -33,7 +33,7 @@ class UserServiceTest {
     private BCryptPasswordEncoder passwordEncoder;
 
     @InjectMocks
-    private UserService userService;
+    private LocalSignupService localSignupService;
 
     private UserSignupRequest request;
     private User user;
@@ -59,25 +59,19 @@ class UserServiceTest {
 
     @Test
     void 회원가입_성공시_이메일과_닉네임을_반환한다() {
-        //given
-        when(userRepository.signup(any(User.class))).thenReturn(user);
+        User response = localSignupService.signup(request);
 
-        //when
-        UserSignupResponse response = userService.signup(request);
-
-        //then
         assertThat(response.getEmail()).isEqualTo(request.getEmail());
         assertThat(response.getNickname()).isEqualTo(request.getNickname());
     }
 
     @Test
     void 중복된_이메일이_존재하는_경우_예외가_발생한다() {
-        //given
-        when(userRepository.signup(any(User.class))).thenThrow(new UserException(ErrorCode.USER_DUPLICATE_EMAIL));
 
-        //when && then
-        assertThatThrownBy(() -> userService.signup(request))
-                .isInstanceOf(CustomException.class)
+        when(userRepository.existsByEmail(request.getEmail())).thenReturn(true);
+
+        assertThatThrownBy(() -> localSignupService.signup(request))
+                .isInstanceOf(UserException.class)
                 .hasMessage(ErrorCode.USER_DUPLICATE_EMAIL.getMessage());
     }
 
@@ -88,7 +82,7 @@ class UserServiceTest {
         request.setConfirmPassword("pw2");
 
         //when && then
-        assertThatThrownBy(() -> userService.signup(request))
+        assertThatThrownBy(() -> localSignupService.signup(request))
                 .isInstanceOf(UserException.class)
                         .hasMessage(ErrorCode.USER_PASSWORD_MISMATCH.getMessage());
     }
