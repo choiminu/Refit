@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class FileStorageService {
+public class FileUploadService {
 
     @Value("${file.dir}")
     private String uploadDir;
@@ -47,10 +47,9 @@ public class FileStorageService {
         String originalFilename = file.getOriginalFilename();
         String storeFileName = createStoreFileName(originalFilename);
 
-        log.info("📁 [파일 저장 완료] fileName = {} size = {}", originalFilename, file.getSize());
-
         try {
             file.transferTo(new File(getPullPath(storeFileName)));
+            log.info("📁 [파일 저장 완료] fileName = {} size = {}", originalFilename, file.getSize());
         } catch (IOException e) {
             throw new FileUploadException(ErrorCode.FILE_SAVE_FAIL);
         }
@@ -66,6 +65,5 @@ public class FileStorageService {
         int pos = originalFileName.lastIndexOf(".");
         return originalFileName.substring(pos + 1);
     }
-
 
 }
