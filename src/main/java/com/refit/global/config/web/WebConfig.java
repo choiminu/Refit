@@ -24,11 +24,11 @@ public class WebConfig implements WebMvcConfigurer {
         resolvers.add(new LoginCheckArgumentResolver());
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginCheckInterceptor())
-                .order(1)
-                .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/users", "/api/login");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LoginCheckInterceptor())
+//                .order(1)
+//                .addPathPatterns("/api/**")
+//                .excludePathPatterns("/api/users", "/api/login");
+//    }
 }

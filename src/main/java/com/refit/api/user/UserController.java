@@ -4,7 +4,7 @@ import com.refit.api.user.dto.UserSignupRequest;
 import com.refit.api.user.dto.UserSignupResponse;
 import com.refit.domain.user.entity.type.LoginType;
 import com.refit.domain.user.service.UserService;
-import com.refit.global.api.ApiResponse;
+import com.refit.global.response.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class UserController {
     @PostMapping
     public ApiResponse<UserSignupResponse> signup(@RequestBody UserSignupRequest request) {
         UserSignupResponse response = userService.signup(request, LoginType.LOCAL);
-        return ApiResponse.success(HttpStatus.CREATED, "회원가입이 완료되었습니다.", response);
+        return ApiResponse.success("회원가입이 완료되었습니다.", response);
     }
 
 }

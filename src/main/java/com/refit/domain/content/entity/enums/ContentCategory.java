@@ -1,7 +1,5 @@
-package com.refit.domain.content.entity.type;
+package com.refit.domain.content.entity.enums;
 
 public enum ContentCategory {
-
     IT, DESIGN
-
 }

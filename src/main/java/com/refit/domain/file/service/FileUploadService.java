@@ -54,7 +54,7 @@ public class FileUploadService {
             throw new FileUploadException(ErrorCode.FILE_SAVE_FAIL);
         }
 
-        return new UploadFile(originalFilename, storeFileName);
+        return new UploadFile(originalFilename, storeFileName, getPullPath(storeFileName));
     }
 
     private String createStoreFileName(String originalFileName) {
