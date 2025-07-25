@@ -1,4 +1,4 @@
-package com.refit.global.config;
+package com.refit.global.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
