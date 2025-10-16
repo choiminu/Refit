@@ -4,6 +4,7 @@ import static com.refit.common.execption.ErrorCode.LOGIN_FAIL;
 
 import com.refit.auth.domain.LoginProvider;
 import com.refit.auth.application.dto.LoginRequest;
+import com.refit.auth.domain.execption.AuthenticationException;
 import com.refit.common.session.LoginUser;
 import com.refit.user.application.service.UserQueryService;
 import com.refit.user.domain.User;
@@ -33,7 +34,7 @@ public class PasswordAuthStrategy implements AuthStrategy{
 
         User findUser = userQueryService.findByEmail(email);
         if (!(passwordEncoder.matches(password, findUser.getPassword()))) {
-            throw new UserException(LOGIN_FAIL);
+            throw new AuthenticationException(LOGIN_FAIL);
         }
 
         return new LoginUser(findUser.getId());
