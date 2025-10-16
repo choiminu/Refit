@@ -3,8 +3,10 @@ package com.refit.user.application.service;
 import static com.refit.common.execption.ErrorCode.USER_DUPLICATE_EMAIL;
 import static org.mockito.Mockito.when;
 
+import com.refit.user.domain.User;
 import com.refit.user.domain.UserException;
 import com.refit.user.domain.repository.UserRepository;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,5 +35,33 @@ class UserQueryServiceTest {
         //when & then
         Assertions.assertThatThrownBy(() -> userQueryService.validateEmailNotExists(duplicationEmail))
                 .isInstanceOf(UserException.class).hasMessage(USER_DUPLICATE_EMAIL.getMessage());
+    }
+
+    @Test
+    @DisplayName("사용자의 이메일로 회원을 검색한다.")
+    public void findUserByEmail() {
+        //given
+        String email = "exam@gmail.com";
+        User user = User.builder().email(email).build();
+        when(userRepository.findUserByEmail(email)).thenReturn(Optional.of(user));
+
+        //when
+        User findUser = userQueryService.findByEmail(email);
+
+        //then
+        Assertions.assertThat(findUser.getEmail()).isEqualTo(email);
+    }
+
+    @Test
+    @DisplayName("테이블에 사용자의 이메일이 존재하지 않는 경우 예외 발생")
+    public void findUserByEmail_fail() {
+        //given
+        String email = "exam@gmail.com";
+        User user = User.builder().email(email).build();
+        when(userRepository.findUserByEmail(email)).thenReturn(Optional.empty());
+
+        //when & then
+        Assertions.assertThatThrownBy(() -> userQueryService.findByEmail(email))
+                .isInstanceOf(UserException.class);
     }
 }
