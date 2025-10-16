@@ -1,6 +1,7 @@
 package com.refit.user.application.service;
 
 import static com.refit.common.execption.ErrorCode.USER_DUPLICATE_EMAIL;
+import static com.refit.common.execption.ErrorCode.USER_NOT_FOUND;
 
 import com.refit.user.domain.User;
 import com.refit.user.domain.UserException;
@@ -17,7 +18,7 @@ public class UserQueryService {
     private final UserRepository userRepository;
 
     public User findByEmail(String email) {
-        return userRepository.findUserByEmail(email).orElseThrow(() -> new UserException(USER_DUPLICATE_EMAIL));
+        return userRepository.findUserByEmail(email).orElseThrow(() -> new UserException(USER_NOT_FOUND));
     }
 
     public void validateEmailNotExists(String email) {
