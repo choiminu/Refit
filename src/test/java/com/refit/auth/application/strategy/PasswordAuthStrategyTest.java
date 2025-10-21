@@ -9,6 +9,9 @@ import com.refit.auth.domain.execption.AuthenticationException;
 import com.refit.common.session.LoginUser;
 import com.refit.user.application.service.UserQueryService;
 import com.refit.user.domain.User;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -71,6 +74,23 @@ class PasswordAuthStrategyTest {
         //when & then
         Assertions.assertThatThrownBy(() -> passwordAuthStrategy.authentication(request))
                 .isInstanceOf(AuthenticationException.class);
+    }
+    @Test
+    @DisplayName("로그인 시 마지막 로그인 시간이 현재 시각으로 갱신된다")
+    public void update_loginAt() {
+        //given
+        LoginRequest req = new LoginRequest("test", "test");
+        User user = new User("user", "pass");
+        user.updateLoginTime();
+
+        when(userQueryService.findByEmail(any())).thenReturn(user);
+        when(passwordEncoder.matches(any(), any())).thenReturn(true);
+
+        //when
+        passwordAuthStrategy.authentication(req);
+
+        //then
+        Assertions.assertThat(user.getLastLoginAt().toLocalDate()).isEqualTo(LocalDate.now());
     }
 
 }

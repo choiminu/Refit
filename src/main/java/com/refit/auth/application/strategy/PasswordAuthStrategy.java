@@ -12,9 +12,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
+@Transactional
 @RequiredArgsConstructor
 public class PasswordAuthStrategy implements AuthStrategy{
 
@@ -36,6 +38,7 @@ public class PasswordAuthStrategy implements AuthStrategy{
             throw new AuthenticationException(LOGIN_FAIL);
         }
 
+        findUser.updateLoginTime();
         return new LoginUser(findUser.getId());
     }
 }
