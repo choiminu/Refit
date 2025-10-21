@@ -9,9 +9,11 @@ import static org.mockito.Mockito.when;
 
 import com.refit.common.execption.ErrorCode;
 import com.refit.user.application.dto.UserSignupRequest;
+import com.refit.user.application.dto.UserUpdateRequest;
 import com.refit.user.domain.User;
 import com.refit.user.domain.exception.UserException;
 import com.refit.user.domain.repository.UserRepository;
+import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -111,4 +113,20 @@ class UserCommandServiceTest {
         User savedUser = captor.getValue();
         Assertions.assertThat(savedUser.getPassword()).isEqualTo("encodedPassword");
     }
+
+    @Test
+    @DisplayName("회원 ID로 회원정보를 삭제한다.")
+    void deleteUserById() {
+        // given
+        Long userId = 1L;
+
+        // when
+        userCommandService.delete(userId);
+
+        // then
+        Optional<User> user = userRepository.findById(userId);
+        Assertions.assertThat(user).isEmpty();
+    }
+
+
 }

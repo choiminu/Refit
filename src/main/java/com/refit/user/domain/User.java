@@ -37,6 +37,8 @@ public class User {
 
     private LocalDateTime lastLoginAt;
 
+    private Boolean deleted = false;
+
     @Builder
     public User(String email, String password) {
         this.email = email;
@@ -55,6 +57,12 @@ public class User {
 
     public void updateLoginTime() {
         this.lastLoginAt = LocalDateTime.now();
+    }
+
+    public void update(String password) {
+        if (!password.isEmpty()) {
+            this.password = password;
+        }
     }
 
 }

@@ -83,7 +83,7 @@ class UserQueryServiceTest {
         when(userMapper.entityToResponse(any())).thenReturn(new UserResponse(1L, "email"));
 
         //when
-        UserResponse findUser = userQueryService.findById(userId);
+        UserResponse findUser = userQueryService.findResponseById(userId);
 
         //then
         assertThat(findUser.getId()).isEqualTo(userId);
@@ -93,7 +93,7 @@ class UserQueryServiceTest {
     @DisplayName("회원 ID가 존재하지 않는 경우 예외가 발생한다.")
     public void findUserById_fail() {
         //given & when & then
-        assertThatThrownBy(() -> userQueryService.findById(any())).isInstanceOf(UserException.class).hasMessage(
+        assertThatThrownBy(() -> userQueryService.findResponseById(any())).isInstanceOf(UserException.class).hasMessage(
                 USER_NOT_FOUND.getMessage());
     }
 }

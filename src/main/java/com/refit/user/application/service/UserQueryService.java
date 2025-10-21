@@ -19,10 +19,14 @@ public class UserQueryService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public UserResponse findById(Long id) {
+    public UserResponse findResponseById(Long id) {
         return userRepository.findById(id)
                 .map(userMapper::entityToResponse)
                 .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+    }
+
+    public User findEntityById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserException(USER_NOT_FOUND));
     }
 
     public User findByEmail(String email) {
