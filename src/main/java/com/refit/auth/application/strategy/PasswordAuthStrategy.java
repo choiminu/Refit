@@ -8,7 +8,6 @@ import com.refit.auth.domain.execption.AuthenticationException;
 import com.refit.common.session.LoginUser;
 import com.refit.user.application.service.UserQueryService;
 import com.refit.user.domain.User;
-import com.refit.user.domain.UserException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;

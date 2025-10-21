@@ -4,7 +4,7 @@ import static com.refit.common.execption.ErrorCode.USER_DUPLICATE_EMAIL;
 import static org.mockito.Mockito.when;
 
 import com.refit.user.domain.User;
-import com.refit.user.domain.UserException;
+import com.refit.user.domain.exception.UserException;
 import com.refit.user.domain.repository.UserRepository;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;

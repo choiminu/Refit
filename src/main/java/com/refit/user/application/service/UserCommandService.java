@@ -4,7 +4,7 @@ import static com.refit.common.execption.ErrorCode.USER_PASSWORD_MISMATCH;
 
 import com.refit.user.application.dto.UserSignupRequest;
 import com.refit.user.domain.User;
-import com.refit.user.domain.UserException;
+import com.refit.user.domain.exception.UserException;
 import com.refit.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

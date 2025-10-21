@@ -8,6 +8,10 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
 
+    // 서버 내부 에러
+    INTERNAL_SERVER_ERROR(500, "서버 내부에서 오류가 발생하였습니다."),
+
+
     // 인증 관련 에러
     LOGIN_FAIL(400, "로그인 실패"),
     UNAUTHORIZED(400,  "로그인이 필요한 서비스입니다."),
