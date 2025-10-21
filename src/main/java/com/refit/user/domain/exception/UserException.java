@@ -1,4 +1,4 @@
-package com.refit.user.domain;
+package com.refit.user.domain.exception;
 
 import com.refit.common.execption.CustomException;
 import com.refit.common.execption.ErrorCode;

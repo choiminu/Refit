@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import com.refit.common.execption.ErrorCode;
 import com.refit.user.application.dto.UserSignupRequest;
 import com.refit.user.domain.User;
-import com.refit.user.domain.UserException;
+import com.refit.user.domain.exception.UserException;
 import com.refit.user.domain.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
